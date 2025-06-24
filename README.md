@@ -1,17 +1,22 @@
-
 # Student CRUD API
 
-This is a simple RESTful API built with **Node.js**, **Express.js**, and **MongoDB Atlas** for performing **CRUD operations** on student records. It uses **Mongoose** for object data modeling and includes basic API endpoints for creating, reading, updating, and deleting students.
+![Coverage](https://img.shields.io/badge/coverage-77.96%25-yellowgreen)
+
+A simple RESTful API for managing student records, built with **Node.js**, **Express.js**, and **MongoDB Atlas**.  
+Includes full **CRUD** functionality and comprehensive **unit**, **integration**, and **API** tests using **Jest**, **Supertest**, and **mongodb-memory-server**.
 
 ---
 
-## 🔧 Technologies Used
+## 🔧 Tech Stack
 
-- Node.js
-- Express.js
-- MongoDB Atlas (Cloud-hosted)
-- Mongoose
-- dotenv
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB Atlas (cloud)  
+- **ODM:** Mongoose  
+- **Testing:**  
+  - Unit & Integration: Jest  
+  - API (end-to-end): Supertest + mongodb-memory-server  
+- **Env Management:** dotenv  
+- **Coverage:** Istanbul (via Jest `--coverage`)  
 
 ---
 
@@ -21,115 +26,100 @@ This is a simple RESTful API built with **Node.js**, **Express.js**, and **Mongo
 
 .
 ├── models/
-│   └── Student.js         # Mongoose schema for student
+│   └── studentModel.js         # Mongoose schema
 ├── routes/
-│   └── studentRoutes.js   # API routes
-├── .env                   # Environment variables
-├── app.js                 # Main server file
+│   └── studentRoutes.js        # CRUD API endpoints
+├── tests/
+│   ├── unit/
+│   │   └── studentModel.test.js
+│   ├── integration/
+│   │   └── studentRoutes.test.js
+│   └── api/
+│       └── apiEndpoints.test.js
+├── db.js                        # MongoDB connection logic
+├── app.js                       # Express app entrypoint
+├── .env                         # Environment variables
+├── .gitignore
 ├── package.json
+└── README.md
 
 ````
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Setup & Run
 
-### 1. Clone the Repository
+1. **Clone & install**  
+   ```bash
+   git clone https://github.com/BhushanSah3/Keploy-Assignment-2
+   cd student-crud-api
+   npm install
 
-```bash
-git clone https://github.com/your-username/student-crud-api.git
-cd student-crud-api
-````
 
-### 2. Install Dependencies
+2. **Environment**
+   Create a file named `.env` in the project root with:
 
-```bash
-npm install
-```
+   ```env
+   PORT=5000
+   MONGO_URI=mongodb+srv://<username>:<password>@<cluster-url>/keploy?retryWrites=true&w=majority&appName=Keploy
+   ```
 
-### 3. Configure Environment Variables
+3. **Run the server**
 
-Create a `.env` file in the root directory and add the following:
+   ```bash
+   npm start
+   ```
 
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@<cluster-url>/keploy?retryWrites=true&w=majority&appName=Keploy
-```
-
----
-
-## 🚀 Run the Server
-
-```bash
-node app.js
-```
-
-The server will start at:
-
-```
-http://localhost:5000
-```
+   Server listens on: `http://localhost:5000`
 
 ---
 
-## 📌 API Endpoints
+## 🚀 API Endpoints
 
-### ➕ Create a Student
+| Method | Endpoint            | Description            |
+| :----: | ------------------- | ---------------------- |
+|  POST  | `/api/students`     | Create a new student   |
+|   GET  | `/api/students`     | Get all students       |
+|   GET  | `/api/students/:id` | Get one student by ID  |
+|   PUT  | `/api/students/:id` | Update a student by ID |
+| DELETE | `/api/students/:id` | Delete a student by ID |
 
-```http
-POST /api/students
-```
-
-**Request Body:**
+**Example Request Body** (for POST/PUT):
 
 ```json
 {
   "name": "John Doe",
   "age": 21,
   "grade": "A",
-  "email": "johndoe@example.com"
+  "email": "john.doe@example.com"
 }
 ```
 
 ---
 
-### 📥 Get All Students
+## 🧪 Testing
 
-```http
-GET /api/students
+All tests (unit, integration, API) use **Jest**. To run:
+
+```bash
+# For coverage report:
+npm test
 ```
+
+* **Unit tests**: Model validation & schema logic
+* **Integration tests**: Route + DB interaction
+* **API tests**: End-to-end CRUD via Supertest + in-memory Mongo
+
+**Coverage report** is generated under `coverage/` and summarized above.
 
 ---
 
-### 📄 Get a Student by ID
+## 📸 Screenshots
+### Coverage Report
 
-```http
-GET /api/students/:id
-```
+![img.png](ScreenShots/6.png)
+![img.png](ScreenShots/7.png)
 
----
-
-### ✏️ Update a Student
-
-```http
-PUT /api/students/:id
-```
-
-**Request Body:**
-
-```json
-{
-  "grade": "B"
-}
-```
-
----
-
-### ❌ Delete a Student
-
-```http
-DELETE /api/students/:id
-```
 
 ## Screenshots of the Responses of CRUD operations
 
@@ -144,6 +134,8 @@ DELETE /api/students/:id
 ### Read a student by ID
 ![img.png](ScreenShots/5.png)
 
+---
+
 ## 📄 License
 
 This project is open-source and free to use.
@@ -153,4 +145,4 @@ This project is open-source and free to use.
 ## 🙋 Author
 
 **Bhushan Shah**
-Student Developer @ KIIT
+

@@ -1,20 +1,21 @@
 require('dotenv').config();
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 const express = require('express');
-const mongoose = require('mongoose');
+const connectDB = require('./db');
 const studentRoutes = require('./routes/studentRoutes');
 
 const app = express();
 app.use(express.json());
 
-// Make sure you're using process.env.MONGO_URI
-const MONGO_URI = process.env.MONGO_URI;
-console.log("Mongo URI:", MONGO_URI);
-
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// Connect (Atlas or skip in test)
+connectDB();
 
 app.use('/api/students', studentRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;
